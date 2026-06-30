@@ -309,6 +309,12 @@ class CJRP_Admin {
                 <a href="<?php echo admin_url('admin.php?page=cjrp-players'); ?>" class="cjrp-back">&laquo; Back</a>
                 <h1><span class="dashicons dashicons-controls-volumeon"></span> <?php echo $id > 0 ? 'Edit Player' : 'Add New Player'; ?></h1>
                 <input type="text" id="cjrp-player-title-display" value="<?php echo esc_attr($title); ?>" placeholder="Player Title" class="cjrp-title-input">
+                <?php if ($id > 0) : ?>
+                <div class="cjrp-header-actions">
+                    <a href="<?php echo home_url('/?cjrp_preview=' . $id); ?>" target="_blank" class="cjrp-btn cjrp-btn-header">&#128065; View</a>
+                    <button type="button" class="cjrp-btn cjrp-btn-header cjrp-embed-code" data-id="<?php echo $id; ?>" data-url="<?php echo esc_attr(home_url('/')); ?>">&#10094;&#10095; Embed</button>
+                </div>
+                <?php endif; ?>
             </div>
 
             <?php if (isset($_GET['saved'])) : ?>

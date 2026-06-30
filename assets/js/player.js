@@ -539,16 +539,20 @@
     }
 
     function repositionFloatingButtons(position, barHeight) {
-        var selectors = '.scroll-top-btn, .dark-mode-toggle, #scrollTopBtn, #darkModeToggle, .cjrp-minimized-btn';
-        var btns = document.querySelectorAll(selectors);
-        var offset = barHeight > 0 ? (barHeight + 15) + 'px' : '';
-        btns.forEach(function(btn) {
-            if (position === 'bottom') {
-                btn.style.bottom = offset;
-            } else {
-                btn.style.top = offset;
-            }
-        });
+        var darkBtn = document.querySelector('.dark-mode-toggle, #darkModeToggle');
+        var scrollBtn = document.querySelector('.scroll-top-btn, #scrollTopBtn');
+        var minBtn = document.querySelector('.cjrp-minimized-btn');
+
+        if (position === 'bottom') {
+            var base = barHeight > 0 ? barHeight + 15 : 20;
+            if (darkBtn) darkBtn.style.bottom = base + 'px';
+            if (scrollBtn) scrollBtn.style.bottom = (base + 60) + 'px';
+            if (minBtn && barHeight === 0) minBtn.style.bottom = (base + 120) + 'px';
+        } else {
+            var base = barHeight > 0 ? barHeight + 15 : 20;
+            if (darkBtn) darkBtn.style.top = base + 'px';
+            if (scrollBtn) scrollBtn.style.top = (base + 60) + 'px';
+        }
     }
 
     function fixBarSkinParents() {

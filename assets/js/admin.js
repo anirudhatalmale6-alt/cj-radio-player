@@ -213,5 +213,74 @@
         if ($.fn.wpColorPicker) {
             $('.cjrp-color-picker').wpColorPicker();
         }
+
+        // Dropdown toggle
+        $(document).on('click', '.cjrp-dropdown-toggle', function(e) {
+            e.stopPropagation();
+            var $dropdown = $(this).closest('.cjrp-dropdown');
+            $('.cjrp-dropdown').not($dropdown).removeClass('open');
+            $dropdown.toggleClass('open');
+        });
+
+        $(document).on('click', function() {
+            $('.cjrp-dropdown').removeClass('open');
+        });
+
+        // Duplicate player
+        $(document).on('click', '.cjrp-duplicate-player', function(e) {
+            e.preventDefault();
+            var id = $(this).data('id');
+            var $form = $('<form method="post">');
+            $form.append('<input type="hidden" name="cjrp_action" value="duplicate_player">');
+            $form.append('<input type="hidden" name="player_id" value="' + id + '">');
+            $form.append($('[name="cjrp_nonce_field"]').first().clone());
+            $('body').append($form);
+            $form.submit();
+        });
+
+        // Embed code modal
+        if (!$('#cjrp-embed-modal').length) {
+            $('body').append(
+                '<div class="cjrp-modal-overlay" id="cjrp-embed-modal">' +
+                '<div class="cjrp-modal">' +
+                '<h3>&lt;&gt; Embed Code</h3>' +
+                '<p>Copy this code to embed the radio player on any website:</p>' +
+                '<textarea id="cjrp-embed-textarea" readonly></textarea>' +
+                '<div class="cjrp-modal-footer">' +
+                '<button type="button" class="cjrp-btn" id="cjrp-embed-close">Close</button>' +
+                '<button type="button" class="cjrp-btn cjrp-btn-primary" id="cjrp-embed-copy">Copy Code</button>' +
+                '</div>' +
+                '</div>' +
+                '</div>'
+            );
+        }
+
+        $(document).on('click', '.cjrp-embed-code', function(e) {
+            e.preventDefault();
+            var id = $(this).data('id');
+            var url = $(this).data('url');
+            var embedCode = '<iframe src="' + url + '?cjrp_embed=' + id + '" width="350" height="300" frameborder="0" allow="autoplay" style="border:none;border-radius:10px;"></iframe>';
+            $('#cjrp-embed-textarea').val(embedCode);
+            $('#cjrp-embed-modal').addClass('visible');
+            $('.cjrp-dropdown').removeClass('open');
+        });
+
+        $(document).on('click', '#cjrp-embed-close', function() {
+            $('#cjrp-embed-modal').removeClass('visible');
+        });
+
+        $(document).on('click', '#cjrp-embed-copy', function() {
+            var textarea = document.getElementById('cjrp-embed-textarea');
+            textarea.select();
+            document.execCommand('copy');
+            $(this).text('Copied!');
+            setTimeout(function() { $('#cjrp-embed-copy').text('Copy Code'); }, 2000);
+        });
+
+        $(document).on('click', '.cjrp-modal-overlay', function(e) {
+            if ($(e.target).hasClass('cjrp-modal-overlay')) {
+                $(this).removeClass('visible');
+            }
+        });
     });
 })(jQuery);

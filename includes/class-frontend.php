@@ -8,6 +8,27 @@ class CJRP_Frontend {
         add_action('wp_enqueue_scripts', array($this, 'enqueue_assets'));
         add_action('wp_footer', array($this, 'render_sticky_player'));
         add_action('wp_head', array($this, 'custom_css'));
+        add_action('template_redirect', array($this, 'handle_embed_page'));
+    }
+
+    public function handle_embed_page() {
+        if (!isset($_GET['cjrp_embed'])) return;
+        $id = intval($_GET['cjrp_embed']);
+        $player = CJRP_Database::get_player($id);
+        if (!$player) { wp_die('Player not found'); }
+
+        wp_enqueue_style('cjrp-player', CJRP_PLUGIN_URL . 'assets/css/player.css', array(), CJRP_VERSION);
+        wp_enqueue_script('cjrp-player', CJRP_PLUGIN_URL . 'assets/js/player.js', array(), CJRP_VERSION, true);
+        $this->enqueue_assets();
+
+        echo '<!DOCTYPE html><html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">';
+        echo '<style>body{margin:0;padding:0;background:transparent;overflow:hidden;}</style>';
+        wp_head();
+        echo '</head><body>';
+        echo do_shortcode('[radio_player id="' . $id . '"]');
+        wp_footer();
+        echo '</body></html>';
+        exit;
     }
 
     public function enqueue_assets() {

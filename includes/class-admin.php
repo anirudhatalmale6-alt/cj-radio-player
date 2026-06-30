@@ -74,6 +74,32 @@ class CJRP_Admin {
             $this->save_player();
         } elseif ($action === 'save_settings') {
             $this->save_settings();
+        } elseif ($action === 'duplicate_player') {
+            $source_id = intval($_POST['player_id']);
+            $source = CJRP_Database::get_player($source_id);
+            if ($source) {
+                $new_id = CJRP_Database::insert_player(array(
+                    'title'      => $source->title . ' (Copy)',
+                    'status'     => $source->status,
+                    'skin'       => $source->skin,
+                    'controls'   => $source->controls,
+                    'appearance' => $source->appearance,
+                    'schedules'  => $source->schedules,
+                ));
+                $stations = CJRP_Database::get_stations($source_id);
+                $st_arr = array();
+                foreach ($stations as $st) {
+                    $st_arr[] = array(
+                        'title'       => $st->title,
+                        'source_type' => $st->source_type,
+                        'source_url'  => $st->source_url,
+                        'art_url'     => $st->art_url,
+                    );
+                }
+                CJRP_Database::save_stations($new_id, $st_arr);
+            }
+            wp_redirect(admin_url('admin.php?page=cjrp-players&duplicated=1'));
+            exit;
         } elseif ($action === 'delete_player') {
             $id = intval($_POST['player_id']);
             CJRP_Database::delete_player($id);
@@ -241,12 +267,21 @@ class CJRP_Admin {
                                 <td><?php echo date('Y-m-d', strtotime($player->created_at)); ?></td>
                                 <td>
                                     <a href="<?php echo admin_url('admin.php?page=cjrp-add-player&id=' . $player->id); ?>" class="cjrp-btn cjrp-btn-edit">Edit</a>
-                                    <form method="post" style="display:inline;" onsubmit="return confirm('Delete this player?');">
-                                        <?php wp_nonce_field('cjrp_nonce', 'cjrp_nonce_field'); ?>
-                                        <input type="hidden" name="cjrp_action" value="delete_player">
-                                        <input type="hidden" name="player_id" value="<?php echo $player->id; ?>">
-                                        <button type="submit" class="cjrp-btn cjrp-btn-delete" title="Delete">&#128465;</button>
-                                    </form>
+                                    <div class="cjrp-dropdown">
+                                        <button type="button" class="cjrp-dropdown-toggle">&#8942;</button>
+                                        <div class="cjrp-dropdown-menu">
+                                            <a href="<?php echo admin_url('admin.php?page=cjrp-add-player&id=' . $player->id); ?>" class="cjrp-dropdown-item">&#9998; Edit</a>
+                                            <a href="<?php echo home_url('/?cjrp_preview=' . $player->id); ?>" target="_blank" class="cjrp-dropdown-item">&#128065; View</a>
+                                            <a href="#" class="cjrp-dropdown-item cjrp-duplicate-player" data-id="<?php echo $player->id; ?>">&#128203; Duplicate</a>
+                                            <a href="#" class="cjrp-dropdown-item cjrp-embed-code" data-id="<?php echo $player->id; ?>" data-url="<?php echo esc_attr(home_url('/')); ?>">&#10094;&#10095; Embed Code</a>
+                                            <form method="post" style="margin:0;" onsubmit="return confirm('Delete this player?');">
+                                                <?php wp_nonce_field('cjrp_nonce', 'cjrp_nonce_field'); ?>
+                                                <input type="hidden" name="cjrp_action" value="delete_player">
+                                                <input type="hidden" name="player_id" value="<?php echo $player->id; ?>">
+                                                <button type="submit" class="cjrp-dropdown-item cjrp-dropdown-delete">&#128465; Delete</button>
+                                            </form>
+                                        </div>
+                                    </div>
                                 </td>
                             </tr>
                             <?php endforeach; ?>

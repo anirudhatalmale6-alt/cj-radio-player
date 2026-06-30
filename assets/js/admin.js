@@ -34,10 +34,25 @@
             $group.find('.cjrp-btn-option').removeClass('active');
             $(this).addClass('active');
             var value = $(this).data('value');
-            // Update hidden input in same control row
             var $hidden = $(this).closest('.cjrp-control-row, .cjrp-source-type, .cjrp-field').find('input[type="hidden"]');
             if ($hidden.length) {
                 $hidden.val(value);
+            }
+            // Swap input/textarea for embed source type
+            if ($(this).closest('.cjrp-source-type').length) {
+                var $field = $(this).closest('.cjrp-field');
+                var $existing = $field.find('.cjrp-source-url');
+                var name = $existing.attr('name');
+                var val = $existing.val();
+                if (value === 'embed') {
+                    if (!$existing.is('textarea')) {
+                        $existing.replaceWith('<textarea name="' + name + '" placeholder="Paste embed/iframe code here" class="cjrp-source-url cjrp-source-embed" rows="4" style="width:100%;font-family:monospace;font-size:12px;">' + $('<div>').text(val).html() + '</textarea>');
+                    }
+                } else {
+                    if ($existing.is('textarea')) {
+                        $existing.replaceWith('<input type="text" name="' + name + '" value="" placeholder="Enter the station stream URL" class="cjrp-source-url cjrp-source-input">');
+                    }
+                }
             }
         });
 
@@ -125,8 +140,8 @@
                 '</div>' +
                 '<input type="hidden" name="stations[' + index + '][source_type]" value="stream_url" class="cjrp-source-type-input">' +
                 '</div>' +
-                '<input type="text" name="stations[' + index + '][source_url]" placeholder="Enter the station stream URL" class="cjrp-source-url">' +
-                '<p class="description">Enter a playable live stream URL, local audio file URL, or YouTube URL.</p>' +
+                '<input type="text" name="stations[' + index + '][source_url]" placeholder="Enter the station stream URL" class="cjrp-source-url cjrp-source-input">' +
+                '<p class="description">Enter a playable live stream URL, local audio file URL, YouTube URL, or paste embed/iframe code.</p>' +
                 '</div>' +
                 '<div class="cjrp-field">' +
                 '<label>Art</label>' +

@@ -118,9 +118,17 @@ class CJRP_Database {
 
         foreach ($stations as $i => $station) {
             $source_type = sanitize_text_field($station['source_type']);
-            $source_url = $source_type === 'embed'
-                ? wp_kses($station['source_url'], array('iframe' => array('src' => true, 'width' => true, 'height' => true, 'frameborder' => true, 'allow' => true, 'allowfullscreen' => true, 'style' => true, 'scrolling' => true), 'object' => array(), 'embed' => array('src' => true, 'type' => true, 'width' => true, 'height' => true)))
-                : esc_url_raw($station['source_url']);
+            if ($source_type === 'embed') {
+                $source_url = wp_kses($station['source_url'], array(
+                    'iframe' => array('src' => true, 'width' => true, 'height' => true, 'frameborder' => true, 'allow' => true, 'allowfullscreen' => true, 'style' => true, 'scrolling' => true, 'title' => true, 'class' => true, 'id' => true, 'loading' => true, 'referrerpolicy' => true, 'sandbox' => true),
+                    'object' => array('data' => true, 'type' => true, 'width' => true, 'height' => true, 'style' => true),
+                    'embed' => array('src' => true, 'type' => true, 'width' => true, 'height' => true, 'style' => true),
+                    'audio' => array('src' => true, 'controls' => true, 'autoplay' => true, 'loop' => true, 'preload' => true, 'style' => true),
+                    'source' => array('src' => true, 'type' => true),
+                ));
+            } else {
+                $source_url = esc_url_raw($station['source_url']);
+            }
             $wpdb->insert($table, array(
                 'player_id'   => $player_id,
                 'title'       => sanitize_text_field($station['title']),

@@ -630,8 +630,12 @@ class CJRP_Admin {
                         </div>
                         <input type="hidden" name="stations[<?php echo $index; ?>][source_type]" value="<?php echo esc_attr($source_type); ?>" class="cjrp-source-type-input">
                     </div>
-                    <input type="text" name="stations[<?php echo $index; ?>][source_url]" value="<?php echo esc_attr($source_url); ?>" placeholder="Enter the station stream URL" class="cjrp-source-url">
-                    <p class="description">Enter a playable live stream URL, local audio file URL, or YouTube URL.</p>
+                    <?php if ($source_type === 'embed') : ?>
+                        <textarea name="stations[<?php echo $index; ?>][source_url]" placeholder="Paste embed/iframe code here" class="cjrp-source-url cjrp-source-embed" rows="4" style="width:100%;font-family:monospace;font-size:12px;"><?php echo esc_textarea($source_url); ?></textarea>
+                    <?php else : ?>
+                        <input type="text" name="stations[<?php echo $index; ?>][source_url]" value="<?php echo esc_attr($source_url); ?>" placeholder="Enter the station stream URL" class="cjrp-source-url cjrp-source-input">
+                    <?php endif; ?>
+                    <p class="description">Enter a playable live stream URL, local audio file URL, YouTube URL, or paste embed/iframe code.</p>
                 </div>
                 <div class="cjrp-field">
                     <label>Art</label>
@@ -698,7 +702,7 @@ class CJRP_Admin {
                                 <select name="cjrp_sticky_player_id">
                                     <option value="">-- Select --</option>
                                     <?php foreach ($players as $p) : ?>
-                                        <option value="<?php echo $p->id; ?>" <?php selected(get_option('cjrp_sticky_player_id'), $p->id); ?>><?php echo esc_html($p->title); ?></option>
+                                        <option value="<?php echo $p->id; ?>" <?php selected(get_option('cjrp_sticky_player_id'), $p->id); ?>><?php echo esc_html($p->title ?: 'Player #' . $p->id); ?></option>
                                     <?php endforeach; ?>
                                 </select>
                                 <p class="description">Select the default sticky player to use.</p>

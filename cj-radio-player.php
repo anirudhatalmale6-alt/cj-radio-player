@@ -2,14 +2,14 @@
 /**
  * Plugin Name: CJ Radio Player
  * Description: Professional radio player with sticky bar, popup player, multiple skins, and shortcode support.
- * Version: 1.0.0
+ * Version: 2.0.0
  * Author: ChatJovenes
  * Text Domain: cj-radio-player
  */
 
 if (!defined('ABSPATH')) exit;
 
-define('CJRP_VERSION', '1.2.1');
+define('CJRP_VERSION', '2.0.0');
 define('CJRP_PLUGIN_DIR', plugin_dir_path(__FILE__));
 define('CJRP_PLUGIN_URL', plugin_dir_url(__FILE__));
 define('CJRP_PLUGIN_FILE', __FILE__);

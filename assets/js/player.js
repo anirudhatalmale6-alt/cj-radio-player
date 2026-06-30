@@ -161,13 +161,27 @@
             });
         }
 
-        // Close
+        // Close (minimize)
         var closeBtn = sticky.querySelector('.cjrp-sticky-close');
+        var minimizedBtn = document.querySelector('.cjrp-minimized-btn');
         if (closeBtn) {
             closeBtn.addEventListener('click', function() {
                 sticky.classList.add('cjrp-sticky-hidden');
-                if (isPlaying) {
-                    audio.pause();
+                if (minimizedBtn) {
+                    minimizedBtn.style.display = 'flex';
+                }
+            });
+        }
+
+        // Minimized button click (maximize)
+        if (minimizedBtn) {
+            minimizedBtn.addEventListener('click', function() {
+                sticky.classList.remove('cjrp-sticky-hidden');
+                minimizedBtn.style.display = 'none';
+                if (!isPlaying && currentPlayerId == playerId) {
+                    audio.play().catch(function(){});
+                } else if (!currentPlayerId) {
+                    playStation(playerId, 0, sticky);
                 }
             });
         }

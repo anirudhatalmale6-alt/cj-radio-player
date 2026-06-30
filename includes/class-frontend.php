@@ -255,6 +255,19 @@ class CJRP_Frontend {
             </div>
             <?php endif; ?>
         </div>
+
+        <?php
+        $min_btn_img = $minimized_img ?: ($first_station->art_url ?: '');
+        $min_position_class = $position === 'top' ? 'cjrp-minimized-top' : 'cjrp-minimized-bottom';
+        ?>
+        <div class="cjrp-minimized-btn <?php echo $min_position_class; ?>" style="display:none;" title="Abrir Radio">
+            <?php if ($min_btn_img) : ?>
+                <img src="<?php echo esc_url($min_btn_img); ?>" alt="Radio">
+            <?php else : ?>
+                <span class="cjrp-minimized-icon">&#9654;</span>
+            <?php endif; ?>
+            <span class="cjrp-minimized-live">LIVE</span>
+        </div>
         <?php
     }
 

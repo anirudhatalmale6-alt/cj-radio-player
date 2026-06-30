@@ -48,6 +48,7 @@ class CJRP_Database {
             'cjrp_sticky_exclude_all' => '0',
             'cjrp_sticky_except_pages' => '',
             'cjrp_sticky_minimized_image' => '',
+            'cjrp_sticky_width' => 'fullscreen',
             'cjrp_popup_always' => '0',
             'cjrp_popup_custom_size' => '0',
             'cjrp_popup_width' => '400',

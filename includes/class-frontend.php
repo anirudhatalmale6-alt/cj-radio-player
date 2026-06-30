@@ -46,6 +46,7 @@ class CJRP_Frontend {
                 'stickyStyle'     => get_option('cjrp_sticky_style', 'fullwidth'),
                 'stickyPosition'  => get_option('cjrp_sticky_position', 'bottom'),
                 'stickyMobile'    => get_option('cjrp_sticky_mobile', '1'),
+                'stickyWidth'     => get_option('cjrp_sticky_width', 'fullscreen'),
                 'popupAlways'     => get_option('cjrp_popup_always', '0'),
                 'popupCustomSize' => get_option('cjrp_popup_custom_size', '0'),
                 'popupWidth'      => get_option('cjrp_popup_width', '400'),
@@ -195,11 +196,12 @@ class CJRP_Frontend {
         $first_station = $stations[0];
         $position = get_option('cjrp_sticky_position', 'bottom');
         $style = get_option('cjrp_sticky_style', 'fullwidth');
+        $sticky_width = get_option('cjrp_sticky_width', 'fullscreen');
         $minimized_img = get_option('cjrp_sticky_minimized_image', '');
         $bg_style = $this->get_bg_style($appearance);
         $text_color = esc_attr($appearance['text_button_color']);
         ?>
-        <div class="cjrp-sticky cjrp-sticky-<?php echo esc_attr($style); ?> cjrp-sticky-<?php echo esc_attr($position); ?>"
+        <div class="cjrp-sticky cjrp-sticky-<?php echo esc_attr($style); ?> cjrp-sticky-<?php echo esc_attr($position); ?> cjrp-sticky-w-<?php echo esc_attr($sticky_width); ?>"
              data-player-id="<?php echo intval($player_id); ?>"
              style="<?php echo $bg_style; ?> color:<?php echo $text_color; ?>;">
 

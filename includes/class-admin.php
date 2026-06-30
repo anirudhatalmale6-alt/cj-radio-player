@@ -167,6 +167,7 @@ class CJRP_Admin {
             'cjrp_sticky_exclude_pages',
             'cjrp_sticky_except_pages',
             'cjrp_sticky_minimized_image',
+            'cjrp_sticky_width',
             'cjrp_popup_width',
             'cjrp_popup_height',
             'cjrp_playlist_height',
@@ -668,6 +669,17 @@ class CJRP_Admin {
                                 </div>
                                 <input type="hidden" name="cjrp_sticky_style" value="<?php echo esc_attr($sticky_style); ?>">
                                 <p class="description">Select the sticky player style.</p>
+                            </div>
+
+                            <div class="cjrp-control-row">
+                                <div class="cjrp-control-label">Sticky Player Width</div>
+                                <div class="cjrp-btn-group">
+                                    <?php $sticky_width = get_option('cjrp_sticky_width', 'fullscreen'); ?>
+                                    <button type="button" class="cjrp-btn-option <?php echo $sticky_width === 'fullscreen' ? 'active' : ''; ?>" data-value="fullscreen">Full Screen</button>
+                                    <button type="button" class="cjrp-btn-option <?php echo $sticky_width === 'content' ? 'active' : ''; ?>" data-value="content">Content Width</button>
+                                </div>
+                                <input type="hidden" name="cjrp_sticky_width" value="<?php echo esc_attr($sticky_width); ?>">
+                                <p class="description">Full Screen = edge to edge. Content Width = matches the website content area.</p>
                             </div>
 
                             <div class="cjrp-control-row">

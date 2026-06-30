@@ -9,7 +9,7 @@
 
 if (!defined('ABSPATH')) exit;
 
-define('CJRP_VERSION', '1.0.0');
+define('CJRP_VERSION', '1.2.1');
 define('CJRP_PLUGIN_DIR', plugin_dir_path(__FILE__));
 define('CJRP_PLUGIN_URL', plugin_dir_url(__FILE__));
 define('CJRP_PLUGIN_FILE', __FILE__);
@@ -20,6 +20,14 @@ require_once CJRP_PLUGIN_DIR . 'includes/class-frontend.php';
 require_once CJRP_PLUGIN_DIR . 'includes/class-ajax.php';
 
 register_activation_hook(__FILE__, array('CJRP_Database', 'create_tables'));
+
+add_action('admin_init', function() {
+    $installed = get_option('cjrp_db_version', '0');
+    if ($installed !== CJRP_VERSION) {
+        CJRP_Database::create_tables();
+        update_option('cjrp_db_version', CJRP_VERSION);
+    }
+});
 
 add_action('init', function() {
     if (is_admin()) {

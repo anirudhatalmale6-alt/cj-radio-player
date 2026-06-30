@@ -281,7 +281,7 @@
 .cjrp-sticky-w-content {
     left: 50%;
     transform: translateX(-50%);
-    max-width: 1200px;
+    max-width: calc(var(--container, 1200px) - 40px);
     width: calc(100% - 40px);
     border-radius: 12px;
     box-shadow: 0 4px 20px rgba(0,0,0,0.3);

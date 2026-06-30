@@ -457,7 +457,12 @@
     padding: 0 !important;
     margin: 0;
     box-shadow: none !important;
-    overflow: visible;
+}
+
+/* Keep art from overflowing when inside theme container */
+.radio-player-content .cjrp-skin-bar .cjrp-art {
+    margin-top: 0;
+    margin-bottom: 0;
 }
 
 

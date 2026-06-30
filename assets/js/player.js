@@ -519,7 +519,6 @@
                     parent.style.background = 'transparent';
                     parent.style.padding = '0';
                     parent.style.boxShadow = 'none';
-                    parent.style.overflow = 'visible';
                 }
                 parent = parent.parentElement;
             }

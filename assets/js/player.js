@@ -178,6 +178,7 @@
         document.body.classList.add('cjrp-has-sticky-' + stickyPos);
         var stickyH = sticky.offsetHeight || 60;
         document.body.style['padding' + (stickyPos === 'top' ? 'Top' : 'Bottom')] = (stickyH + 5) + 'px';
+        repositionFloatingButtons(stickyPos, stickyH);
 
         // Close (minimize)
         var closeBtn = sticky.querySelector('.cjrp-sticky-close');
@@ -187,6 +188,7 @@
                 sticky.classList.add('cjrp-sticky-hidden');
                 document.body.classList.remove('cjrp-has-sticky-' + stickyPos);
                 document.body.style['padding' + (stickyPos === 'top' ? 'Top' : 'Bottom')] = '';
+                repositionFloatingButtons(stickyPos, 0);
                 if (minimizedBtn) {
                     minimizedBtn.style.display = 'flex';
                 }
@@ -200,6 +202,7 @@
                 document.body.classList.add('cjrp-has-sticky-' + stickyPos);
                 var sH = sticky.offsetHeight || 60;
                 document.body.style['padding' + (stickyPos === 'top' ? 'Top' : 'Bottom')] = (sH + 5) + 'px';
+                repositionFloatingButtons(stickyPos, sH);
                 minimizedBtn.style.display = 'none';
                 if (!isPlaying && currentPlayerId == playerId) {
                     audio.play().catch(function(){});
@@ -531,6 +534,19 @@
                 setTimeout(function() {
                     playStation(playerId, 0, el);
                 }, 300);
+            }
+        });
+    }
+
+    function repositionFloatingButtons(position, barHeight) {
+        var selectors = '.scroll-top-btn, .dark-mode-toggle, #scrollTopBtn, #darkModeToggle, .cjrp-minimized-btn';
+        var btns = document.querySelectorAll(selectors);
+        var offset = barHeight > 0 ? (barHeight + 15) + 'px' : '';
+        btns.forEach(function(btn) {
+            if (position === 'bottom') {
+                btn.style.bottom = offset;
+            } else {
+                btn.style.top = offset;
             }
         });
     }

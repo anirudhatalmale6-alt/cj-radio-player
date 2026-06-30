@@ -169,6 +169,8 @@ class CJRP_Database {
             'text_button_color'    => '#ffffff',
             'border_radius'        => '10',
             'box_shadow'           => '1',
+            'bar_height'           => '60',
+            'art_size'             => '80',
         );
     }
 }

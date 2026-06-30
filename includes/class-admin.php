@@ -566,6 +566,22 @@ class CJRP_Admin {
                             </div>
 
                             <div class="cjrp-control-row">
+                                <div class="cjrp-control-label">Bar Height (Bar skin)</div>
+                                <input type="range" name="appearance[bar_height]" min="40" max="120" value="<?php echo esc_attr($appearance['bar_height'] ?? '60'); ?>" class="cjrp-range">
+                                <input type="number" value="<?php echo esc_attr($appearance['bar_height'] ?? '60'); ?>" class="cjrp-range-value" min="40" max="120">
+                                <button type="button" class="cjrp-btn-reset" data-default="60">Reset</button>
+                                <p class="description">Set the bar player height in pixels (only applies to Bar skin).</p>
+                            </div>
+
+                            <div class="cjrp-control-row">
+                                <div class="cjrp-control-label">Art/Image Size</div>
+                                <input type="range" name="appearance[art_size]" min="30" max="150" value="<?php echo esc_attr($appearance['art_size'] ?? '80'); ?>" class="cjrp-range">
+                                <input type="number" value="<?php echo esc_attr($appearance['art_size'] ?? '80'); ?>" class="cjrp-range-value" min="30" max="150">
+                                <button type="button" class="cjrp-btn-reset" data-default="80">Reset</button>
+                                <p class="description">Set the station art/logo image size in pixels.</p>
+                            </div>
+
+                            <div class="cjrp-control-row">
                                 <div class="cjrp-control-label">Background Image</div>
                                 <input type="text" name="appearance[bg_image]" value="<?php echo esc_attr($appearance['bg_image']); ?>" class="cjrp-image-url" placeholder="Image URL">
                                 <button type="button" class="cjrp-btn cjrp-upload-btn">Upload</button>

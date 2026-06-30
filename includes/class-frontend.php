@@ -108,17 +108,21 @@ class CJRP_Frontend {
         $radius = intval($appearance['border_radius']);
         $shadow = $appearance['box_shadow'] ? 'box-shadow:0 4px 20px rgba(0,0,0,0.3);' : '';
         $width = intval($appearance['player_width_desktop']);
+        $bar_height = intval($appearance['bar_height'] ?? 60);
+        $art_size = intval($appearance['art_size'] ?? 80);
+        $is_bar = ($player->skin === 'skin-bar');
+        $bar_style = $is_bar ? "min-height:{$bar_height}px;" : '';
 
         ob_start();
         ?>
         <div class="cjrp-player cjrp-<?php echo esc_attr($player->skin); ?>"
              data-player-id="<?php echo $id; ?>"
-             style="<?php echo $bg_style; ?> color:<?php echo $text_color; ?>; border-radius:<?php echo $radius; ?>px; <?php echo $shadow; ?> max-width:<?php echo $width; ?>px;">
+             style="<?php echo $bg_style; ?> color:<?php echo $text_color; ?>; border-radius:<?php echo $radius; ?>px; <?php echo $shadow; ?> max-width:<?php echo $width; ?>px; <?php echo $bar_style; ?>">
 
             <?php if ($first_station) : ?>
-            <div class="cjrp-player-inner">
+            <div class="cjrp-player-inner" style="<?php echo $bar_style; ?>"><?php /* art size applied inline */ ?>
                 <?php if ($controls['artwork_image']) : ?>
-                <div class="cjrp-art">
+                <div class="cjrp-art" style="width:<?php echo $art_size; ?>px;height:<?php echo $art_size; ?>px;">
                     <?php if ($first_station->art_url) : ?>
                         <img src="<?php echo esc_url($first_station->art_url); ?>" alt="<?php echo esc_attr($first_station->title); ?>">
                     <?php else : ?>

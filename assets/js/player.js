@@ -309,26 +309,36 @@
     }
 
     function updatePlayerUI(station, context) {
-        // Update titles everywhere
-        var titles = document.querySelectorAll('.cjrp-title, .cjrp-sticky-title');
-        titles.forEach(function(el) { el.textContent = station.title; });
+        // Update title only in the current player context and sticky
+        if (context) {
+            var contextTitle = context.querySelector('.cjrp-title');
+            if (contextTitle) contextTitle.textContent = station.title;
+        }
 
-        // Update sticky text
+        // Always update sticky player info
+        var stickyTitles = document.querySelectorAll('.cjrp-sticky-title');
+        stickyTitles.forEach(function(el) { el.textContent = station.title; });
+
         var stickyTexts = document.querySelectorAll('.cjrp-sticky-text');
         stickyTexts.forEach(function(el) {
             el.innerHTML = 'Escuchando <strong class="cjrp-sticky-title">' + escapeHtml(station.title) + '</strong>';
         });
 
-        // Update art
+        // Update art only in current context and sticky
         if (station.artUrl) {
-            var arts = document.querySelectorAll('.cjrp-art img, .cjrp-sticky-art');
-            arts.forEach(function(el) {
+            if (context) {
+                var contextArt = context.querySelector('.cjrp-art img');
+                if (contextArt) contextArt.src = station.artUrl;
+            }
+            var stickyArts = document.querySelectorAll('.cjrp-sticky-art');
+            stickyArts.forEach(function(el) {
                 if (el.tagName === 'IMG') el.src = station.artUrl;
             });
         }
 
-        // Update playlist active state
-        var playlistItems = document.querySelectorAll('.cjrp-playlist-item');
+        // Update playlist active state only in current context
+        var playlistContainer = context || document;
+        var playlistItems = playlistContainer.querySelectorAll('.cjrp-playlist-item');
         playlistItems.forEach(function(item) {
             item.classList.toggle('active', parseInt(item.dataset.index) === currentStationIndex);
         });

@@ -309,13 +309,18 @@
     }
 
     function updatePlayerUI(station, context) {
-        // Update title only in the current player context and sticky
-        if (context) {
+        // Update title ONLY in the player that triggered playback
+        if (context && !context.classList.contains('cjrp-sticky')) {
             var contextTitle = context.querySelector('.cjrp-title');
             if (contextTitle) contextTitle.textContent = station.title;
+
+            if (station.artUrl) {
+                var contextArt = context.querySelector('.cjrp-art img');
+                if (contextArt) contextArt.src = station.artUrl;
+            }
         }
 
-        // Always update sticky player info
+        // Always update sticky player info to show what's currently playing
         var stickyTitles = document.querySelectorAll('.cjrp-sticky-title');
         stickyTitles.forEach(function(el) { el.textContent = station.title; });
 
@@ -324,12 +329,7 @@
             el.innerHTML = 'Escuchando <strong class="cjrp-sticky-title">' + escapeHtml(station.title) + '</strong>';
         });
 
-        // Update art only in current context and sticky
         if (station.artUrl) {
-            if (context) {
-                var contextArt = context.querySelector('.cjrp-art img');
-                if (contextArt) contextArt.src = station.artUrl;
-            }
             var stickyArts = document.querySelectorAll('.cjrp-sticky-art');
             stickyArts.forEach(function(el) {
                 if (el.tagName === 'IMG') el.src = station.artUrl;
@@ -365,16 +365,31 @@
     }
 
     function updateAllPlayButtons(playing) {
-        var btns = document.querySelectorAll('.cjrp-btn-play, .cjrp-sticky-play');
-        btns.forEach(function(btn) {
-            if (playing) {
+        // Reset ALL play buttons first
+        var allBtns = document.querySelectorAll('.cjrp-btn-play, .cjrp-sticky-play');
+        allBtns.forEach(function(btn) {
+            btn.innerHTML = '&#9654;';
+            btn.classList.remove('playing');
+        });
+
+        if (!playing) return;
+
+        // Only activate buttons for the current player
+        var activePlayer = document.querySelector('.cjrp-player[data-player-id="' + currentPlayerId + '"]');
+        if (activePlayer) {
+            var btn = activePlayer.querySelector('.cjrp-btn-play');
+            if (btn) {
                 btn.innerHTML = '&#10074;&#10074;';
                 btn.classList.add('playing');
-            } else {
-                btn.innerHTML = '&#9654;';
-                btn.classList.remove('playing');
             }
-        });
+        }
+
+        // Always update sticky play button when something is playing
+        var stickyBtn = document.querySelector('.cjrp-sticky-play');
+        if (stickyBtn) {
+            stickyBtn.innerHTML = '&#10074;&#10074;';
+            stickyBtn.classList.add('playing');
+        }
     }
 
     function updateStatus(live) {

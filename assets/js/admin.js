@@ -121,6 +121,7 @@
                 '<button type="button" class="cjrp-btn-option active" data-value="stream_url">&#128279; Stream URL</button>' +
                 '<button type="button" class="cjrp-btn-option" data-value="local_audio">&#127925; Local Audio</button>' +
                 '<button type="button" class="cjrp-btn-option" data-value="youtube">&#9654; YouTube</button>' +
+                '<button type="button" class="cjrp-btn-option" data-value="embed">&#128187; Embed</button>' +
                 '</div>' +
                 '<input type="hidden" name="stations[' + index + '][source_type]" value="stream_url" class="cjrp-source-type-input">' +
                 '</div>' +

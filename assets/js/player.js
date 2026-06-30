@@ -172,9 +172,11 @@
             });
         }
 
-        // Add body class for sticky position
+        // Add body class for sticky position and dynamic padding
         var stickyPos = sticky.classList.contains('cjrp-sticky-top') ? 'top' : 'bottom';
         document.body.classList.add('cjrp-has-sticky-' + stickyPos);
+        var stickyH = sticky.offsetHeight || 60;
+        document.body.style['padding' + (stickyPos === 'top' ? 'Top' : 'Bottom')] = (stickyH + 5) + 'px';
 
         // Close (minimize)
         var closeBtn = sticky.querySelector('.cjrp-sticky-close');
@@ -183,6 +185,7 @@
             closeBtn.addEventListener('click', function() {
                 sticky.classList.add('cjrp-sticky-hidden');
                 document.body.classList.remove('cjrp-has-sticky-' + stickyPos);
+                document.body.style['padding' + (stickyPos === 'top' ? 'Top' : 'Bottom')] = '';
                 if (minimizedBtn) {
                     minimizedBtn.style.display = 'flex';
                 }
@@ -194,6 +197,8 @@
             minimizedBtn.addEventListener('click', function() {
                 sticky.classList.remove('cjrp-sticky-hidden');
                 document.body.classList.add('cjrp-has-sticky-' + stickyPos);
+                var sH = sticky.offsetHeight || 60;
+                document.body.style['padding' + (stickyPos === 'top' ? 'Top' : 'Bottom')] = (sH + 5) + 'px';
                 minimizedBtn.style.display = 'none';
                 if (!isPlaying && currentPlayerId == playerId) {
                     audio.play().catch(function(){});
@@ -261,6 +266,16 @@
         var station = playerData.stations[index];
         currentPlayerId = playerId;
         currentStationIndex = index;
+
+        // Handle embed code
+        if (station.sourceType === 'embed') {
+            playEmbed(station.sourceUrl);
+            updatePlayerUI(station, context);
+            isPlaying = true;
+            updateAllPlayButtons(true);
+            updateStatus(true);
+            return;
+        }
 
         // Handle YouTube
         if (station.sourceType === 'youtube') {
@@ -411,6 +426,17 @@
     function extractYouTubeId(url) {
         var match = url.match(/(?:youtube\.com\/(?:watch\?v=|embed\/)|youtu\.be\/)([^&?#]+)/);
         return match ? match[1] : null;
+    }
+
+    function playEmbed(embedCode) {
+        var existingEmbed = document.getElementById('cjrp-embed-frame');
+        if (existingEmbed) existingEmbed.remove();
+
+        var container = document.createElement('div');
+        container.id = 'cjrp-embed-frame';
+        container.style.cssText = 'position:fixed;left:-9999px;width:1px;height:1px;overflow:hidden;';
+        container.innerHTML = embedCode;
+        document.body.appendChild(container);
     }
 
     function playYouTube(videoId) {

@@ -49,6 +49,7 @@ class CJRP_Database {
             'cjrp_sticky_except_pages' => '',
             'cjrp_sticky_minimized_image' => '',
             'cjrp_sticky_width' => 'fullscreen',
+            'cjrp_sticky_height' => '55',
             'cjrp_popup_always' => '0',
             'cjrp_popup_custom_size' => '0',
             'cjrp_popup_width' => '400',
@@ -116,11 +117,15 @@ class CJRP_Database {
         $wpdb->delete($table, array('player_id' => $player_id));
 
         foreach ($stations as $i => $station) {
+            $source_type = sanitize_text_field($station['source_type']);
+            $source_url = $source_type === 'embed'
+                ? wp_kses($station['source_url'], array('iframe' => array('src' => true, 'width' => true, 'height' => true, 'frameborder' => true, 'allow' => true, 'allowfullscreen' => true, 'style' => true, 'scrolling' => true), 'object' => array(), 'embed' => array('src' => true, 'type' => true, 'width' => true, 'height' => true)))
+                : esc_url_raw($station['source_url']);
             $wpdb->insert($table, array(
                 'player_id'   => $player_id,
                 'title'       => sanitize_text_field($station['title']),
-                'source_type' => sanitize_text_field($station['source_type']),
-                'source_url'  => esc_url_raw($station['source_url']),
+                'source_type' => $source_type,
+                'source_url'  => $source_url,
                 'art_url'     => esc_url_raw($station['art_url']),
                 'sort_order'  => $i,
             ));

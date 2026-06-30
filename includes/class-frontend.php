@@ -199,15 +199,16 @@ class CJRP_Frontend {
         $position = get_option('cjrp_sticky_position', 'bottom');
         $style = get_option('cjrp_sticky_style', 'fullwidth');
         $sticky_width = get_option('cjrp_sticky_width', 'fullscreen');
+        $sticky_height = get_option('cjrp_sticky_height', '55');
         $minimized_img = get_option('cjrp_sticky_minimized_image', '');
         $bg_style = $this->get_bg_style($appearance);
         $text_color = esc_attr($appearance['text_button_color']);
         ?>
         <div class="cjrp-sticky cjrp-sticky-<?php echo esc_attr($style); ?> cjrp-sticky-<?php echo esc_attr($position); ?> cjrp-sticky-w-<?php echo esc_attr($sticky_width); ?>"
              data-player-id="<?php echo intval($player_id); ?>"
-             style="<?php echo $bg_style; ?> color:<?php echo $text_color; ?>;">
+             style="<?php echo $bg_style; ?> color:<?php echo $text_color; ?>; min-height:<?php echo intval($sticky_height); ?>px;">
 
-            <div class="cjrp-sticky-inner">
+            <div class="cjrp-sticky-inner" style="min-height:<?php echo intval($sticky_height); ?>px;">
                 <?php if ($first_station->art_url) : ?>
                     <img src="<?php echo esc_url($first_station->art_url); ?>" class="cjrp-sticky-art" alt="">
                 <?php elseif ($minimized_img) : ?>

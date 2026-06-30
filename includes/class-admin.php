@@ -168,6 +168,7 @@ class CJRP_Admin {
             'cjrp_sticky_except_pages',
             'cjrp_sticky_minimized_image',
             'cjrp_sticky_width',
+            'cjrp_sticky_height',
             'cjrp_popup_width',
             'cjrp_popup_height',
             'cjrp_playlist_height',
@@ -584,6 +585,7 @@ class CJRP_Admin {
                             <button type="button" class="cjrp-btn-option <?php echo $source_type === 'stream_url' ? 'active' : ''; ?>" data-value="stream_url">&#128279; Stream URL</button>
                             <button type="button" class="cjrp-btn-option <?php echo $source_type === 'local_audio' ? 'active' : ''; ?>" data-value="local_audio">&#127925; Local Audio</button>
                             <button type="button" class="cjrp-btn-option <?php echo $source_type === 'youtube' ? 'active' : ''; ?>" data-value="youtube">&#9654; YouTube</button>
+                            <button type="button" class="cjrp-btn-option <?php echo $source_type === 'embed' ? 'active' : ''; ?>" data-value="embed">&#128187; Embed</button>
                         </div>
                         <input type="hidden" name="stations[<?php echo $index; ?>][source_type]" value="<?php echo esc_attr($source_type); ?>" class="cjrp-source-type-input">
                     </div>
@@ -685,6 +687,14 @@ class CJRP_Admin {
                                 </div>
                                 <input type="hidden" name="cjrp_sticky_width" value="<?php echo esc_attr($sticky_width); ?>">
                                 <p class="description">Full Screen = edge to edge. Content Width = matches the website content area.</p>
+                            </div>
+
+                            <div class="cjrp-control-row">
+                                <div class="cjrp-control-label">Sticky Player Height</div>
+                                <input type="range" name="cjrp_sticky_height" min="40" max="120" value="<?php echo esc_attr(get_option('cjrp_sticky_height', '55')); ?>" class="cjrp-range">
+                                <input type="number" value="<?php echo esc_attr(get_option('cjrp_sticky_height', '55')); ?>" class="cjrp-range-value" min="40" max="120">
+                                <button type="button" class="cjrp-btn-reset" data-default="55">Reset</button>
+                                <p class="description">Set the sticky player height in pixels.</p>
                             </div>
 
                             <div class="cjrp-control-row">

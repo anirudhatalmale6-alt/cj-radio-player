@@ -468,16 +468,20 @@
 .cjrp-skin-bar .cjrp-player-inner {
     flex-direction: row;
     flex-wrap: nowrap;
-    padding: 8px 20px;
+    padding: 12px 20px;
     align-items: center;
     gap: 15px;
+    min-height: 60px;
 }
 
 .cjrp-skin-bar .cjrp-art {
-    width: 50px;
-    height: 50px;
-    border-radius: 8px;
+    width: 80px;
+    height: 80px;
+    border-radius: 10px;
     flex-shrink: 0;
+    margin-top: -15px;
+    margin-bottom: -15px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
 }
 
 .cjrp-skin-bar .cjrp-info {
@@ -524,8 +528,10 @@
         gap: 10px;
     }
     .cjrp-skin-bar .cjrp-art {
-        width: 40px;
-        height: 40px;
+        width: 65px;
+        height: 65px;
+        margin-top: -10px;
+        margin-bottom: -10px;
     }
     .cjrp-skin-bar .cjrp-title {
         font-size: 13px;

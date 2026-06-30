@@ -259,7 +259,7 @@
             e.preventDefault();
             var id = $(this).data('id');
             var url = $(this).data('url');
-            var embedCode = '<iframe src="' + url + '?cjrp_embed=' + id + '" width="350" height="300" frameborder="0" allow="autoplay" style="border:none;border-radius:10px;"></iframe>';
+            var embedCode = '<iframe src="' + url + '?cjrp_embed=' + id + '" width="100%" height="400" frameborder="0" allow="autoplay" style="border:none;border-radius:10px;"></iframe>';
             $('#cjrp-embed-textarea').val(embedCode);
             $('#cjrp-embed-modal').addClass('visible');
             $('.cjrp-dropdown').removeClass('open');

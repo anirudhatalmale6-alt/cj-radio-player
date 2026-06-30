@@ -22,7 +22,7 @@ class CJRP_Frontend {
         $this->enqueue_assets();
 
         echo '<!DOCTYPE html><html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">';
-        echo '<style>body{margin:0;padding:0;background:transparent;overflow:hidden;}</style>';
+        echo '<style>body{margin:0;padding:0;background:transparent;display:flex;align-items:center;justify-content:center;min-height:100vh;} .cjrp-player{margin:0;width:100%;max-width:100%;}</style>';
         wp_head();
         echo '</head><body>';
         echo do_shortcode('[radio_player id="' . $id . '"]');

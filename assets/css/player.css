@@ -443,6 +443,84 @@
     flex: 1;
 }
 
+/* Skin Bar - Full Width Horizontal Bar */
+.cjrp-skin-bar {
+    max-width: 100% !important;
+    border-radius: 0 !important;
+    width: 100%;
+}
+
+.cjrp-skin-bar .cjrp-player-inner {
+    flex-direction: row;
+    flex-wrap: nowrap;
+    padding: 8px 20px;
+    align-items: center;
+    gap: 15px;
+}
+
+.cjrp-skin-bar .cjrp-art {
+    width: 50px;
+    height: 50px;
+    border-radius: 8px;
+    flex-shrink: 0;
+}
+
+.cjrp-skin-bar .cjrp-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.cjrp-skin-bar .cjrp-title {
+    font-size: 15px;
+    font-weight: 700;
+}
+
+.cjrp-skin-bar .cjrp-artist {
+    font-size: 12px;
+}
+
+.cjrp-skin-bar .cjrp-status {
+    margin-top: 2px;
+}
+
+.cjrp-skin-bar .cjrp-controls {
+    flex-shrink: 0;
+    gap: 6px;
+}
+
+.cjrp-skin-bar .cjrp-btn-play {
+    width: 38px;
+    height: 38px;
+}
+
+.cjrp-skin-bar .cjrp-progress {
+    margin-top: 0;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    border-radius: 0;
+}
+
+@media (max-width: 768px) {
+    .cjrp-skin-bar .cjrp-player-inner {
+        padding: 6px 12px;
+        gap: 10px;
+    }
+    .cjrp-skin-bar .cjrp-art {
+        width: 40px;
+        height: 40px;
+    }
+    .cjrp-skin-bar .cjrp-title {
+        font-size: 13px;
+    }
+    .cjrp-skin-bar .cjrp-btn-prev,
+    .cjrp-skin-bar .cjrp-btn-next {
+        display: none;
+    }
+}
+
 /* ===== Popup Player ===== */
 .cjrp-popup-overlay {
     position: fixed;

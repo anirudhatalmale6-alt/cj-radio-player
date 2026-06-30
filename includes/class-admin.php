@@ -364,9 +364,10 @@ class CJRP_Admin {
                             <div class="cjrp-skins-grid">
                                 <?php
                                 $skins = array(
-                                    'skin-1' => 'Skin 1',
-                                    'skin-2' => 'Skin 2',
-                                    'skin-3' => 'Skin 3',
+                                    'skin-1' => 'Skin 1 (Card)',
+                                    'skin-2' => 'Skin 2 (Compact)',
+                                    'skin-3' => 'Skin 3 (Mini)',
+                                    'skin-bar' => 'Bar (Full Width)',
                                 );
                                 foreach ($skins as $skin_id => $skin_name) :
                                 ?>

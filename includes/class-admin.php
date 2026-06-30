@@ -146,10 +146,11 @@ class CJRP_Admin {
         if (!empty($_POST['stations']) && is_array($_POST['stations'])) {
             foreach ($_POST['stations'] as $st) {
                 if (empty($st['title']) && empty($st['source_url'])) continue;
+                $st_type = sanitize_text_field($st['source_type'] ?? 'stream_url');
                 $stations[] = array(
                     'title'       => sanitize_text_field($st['title'] ?? ''),
-                    'source_type' => sanitize_text_field($st['source_type'] ?? 'stream_url'),
-                    'source_url'  => esc_url_raw($st['source_url'] ?? ''),
+                    'source_type' => $st_type,
+                    'source_url'  => $st_type === 'embed' ? ($st['source_url'] ?? '') : esc_url_raw($st['source_url'] ?? ''),
                     'art_url'     => esc_url_raw($st['art_url'] ?? ''),
                 );
             }

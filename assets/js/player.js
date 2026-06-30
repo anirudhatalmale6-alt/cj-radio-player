@@ -66,12 +66,16 @@
             if (prevBtn) prevBtn.addEventListener('click', function() { changeStation(playerId, -1, el); });
             if (nextBtn) nextBtn.addEventListener('click', function() { changeStation(playerId, 1, el); });
 
-            // Volume toggle
+            // Volume toggle (click = show slider, long press / double = mute)
             var volBtn = el.querySelector('.cjrp-btn-volume');
             if (volBtn) {
                 volBtn.addEventListener('click', function() {
                     var slider = el.querySelector('.cjrp-volume-slider');
-                    if (slider) slider.classList.toggle('visible');
+                    if (slider) {
+                        slider.classList.toggle('visible');
+                    } else {
+                        toggleMute();
+                    }
                 });
             }
 
@@ -79,8 +83,7 @@
             var volRange = el.querySelector('.cjrp-vol-range');
             if (volRange) {
                 volRange.addEventListener('input', function() {
-                    audio.volume = this.value / 100;
-                    syncVolumeSliders(this.value);
+                    setVolume(this.value);
                 });
             }
 
@@ -102,11 +105,16 @@
                 });
             });
 
-            // Popup
+            // Popup / Full Player
             var popupBtn = el.querySelector('.cjrp-btn-popup');
             if (popupBtn) {
                 popupBtn.addEventListener('click', function() {
-                    openPopup(playerId);
+                    var customUrl = this.getAttribute('data-popup-url');
+                    if (customUrl) {
+                        window.open(customUrl, '_blank');
+                    } else {
+                        openPopup(playerId);
+                    }
                 });
             }
 
@@ -149,15 +157,18 @@
         if (volBtn) {
             volBtn.addEventListener('click', function() {
                 var slider = sticky.querySelector('.cjrp-sticky-vol-slider');
-                if (slider) slider.classList.toggle('visible');
+                if (slider) {
+                    slider.classList.toggle('visible');
+                } else {
+                    toggleMute();
+                }
             });
         }
 
         var volRange = sticky.querySelector('.cjrp-vol-range');
         if (volRange) {
             volRange.addEventListener('input', function() {
-                audio.volume = this.value / 100;
-                syncVolumeSliders(this.value);
+                setVolume(this.value);
             });
         }
 
@@ -203,11 +214,16 @@
             });
         });
 
-        // Popup
+        // Popup / Full Player
         var popupBtn = sticky.querySelector('.cjrp-sticky-popup');
         if (popupBtn) {
             popupBtn.addEventListener('click', function() {
-                openPopup(playerId);
+                var customUrl = this.getAttribute('data-popup-url');
+                if (customUrl) {
+                    window.open(customUrl, '_blank');
+                } else {
+                    openPopup(playerId);
+                }
             });
         }
 
@@ -334,6 +350,38 @@
         var dots = document.querySelectorAll('.cjrp-status-dot');
         dots.forEach(function(dot) {
             dot.classList.toggle('cjrp-dot-live', live);
+        });
+    }
+
+    var savedVolume = 0.8;
+
+    function setVolume(val) {
+        var vol = val / 100;
+        savedVolume = vol;
+        try { audio.volume = vol; } catch(e) {}
+        syncVolumeSliders(val);
+        updateVolumeIcons(vol > 0);
+    }
+
+    function toggleMute() {
+        if (audio.volume > 0) {
+            savedVolume = audio.volume;
+            try { audio.volume = 0; } catch(e) {}
+            audio.muted = true;
+            syncVolumeSliders(0);
+            updateVolumeIcons(false);
+        } else {
+            try { audio.volume = savedVolume || 0.8; } catch(e) {}
+            audio.muted = false;
+            syncVolumeSliders((savedVolume || 0.8) * 100);
+            updateVolumeIcons(true);
+        }
+    }
+
+    function updateVolumeIcons(hasVolume) {
+        var btns = document.querySelectorAll('.cjrp-btn-volume, .cjrp-sticky-volume');
+        btns.forEach(function(btn) {
+            btn.innerHTML = hasVolume ? '&#128266;' : '&#128263;';
         });
     }
 

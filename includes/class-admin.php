@@ -88,7 +88,7 @@ class CJRP_Admin {
         $controls = array();
         $defaults_c = CJRP_Database::get_default_controls();
         foreach ($defaults_c as $key => $default) {
-            if (in_array($key, array('fallback_title', 'fallback_artist'))) {
+            if (in_array($key, array('fallback_title', 'fallback_artist', 'popup_url'))) {
                 $controls[$key] = sanitize_text_field($_POST['controls'][$key] ?? $default);
             } else {
                 $controls[$key] = isset($_POST['controls'][$key]) ? '1' : '0';
@@ -371,12 +371,17 @@ class CJRP_Admin {
                             </div>
 
                             <div class="cjrp-control-row">
-                                <div class="cjrp-control-label">&#128194; Popup Icon</div>
+                                <div class="cjrp-control-label">&#128194; Popup Icon (Full Player)</div>
                                 <label class="cjrp-toggle">
                                     <input type="checkbox" name="controls[popup_icon]" value="1" <?php checked($controls['popup_icon'], '1'); ?>>
                                     <span class="cjrp-toggle-slider"></span>
                                 </label>
-                                <p class="description">Show/hide the popup player icon.</p>
+                                <p class="description">Show/hide the Full Player popup icon.</p>
+                                <div class="cjrp-sub-field">
+                                    <label>Popup URL (optional)</label>
+                                    <input type="text" name="controls[popup_url]" value="<?php echo esc_attr($controls['popup_url'] ?? ''); ?>" placeholder="https://example.com/my-radio-page">
+                                    <p class="description">Custom URL to open when clicking the Full Player icon. Leave empty to open a popup window with the player.</p>
+                                </div>
                             </div>
 
                             <div class="cjrp-control-row">

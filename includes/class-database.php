@@ -140,6 +140,7 @@ class CJRP_Database {
             'show_artist_name'  => '1',
             'fallback_artist'   => '',
             'artwork_image'     => '1',
+            'popup_url'         => '',
         );
     }
 

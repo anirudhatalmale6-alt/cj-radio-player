@@ -448,6 +448,21 @@
     max-width: 100% !important;
     border-radius: 0 !important;
     width: 100%;
+    margin: 0 !important;
+}
+
+/* Remove parent container background/padding when using bar skin */
+.radio-player-box:has(.cjrp-skin-bar),
+.radio-player-content:has(.cjrp-skin-bar) {
+    background: transparent !important;
+    padding: 0 !important;
+    margin: 0;
+    box-shadow: none !important;
+    overflow: visible;
+}
+
+.radio-player-box:has(.cjrp-skin-bar) {
+    border-radius: 0;
 }
 
 .cjrp-skin-bar .cjrp-player-inner {

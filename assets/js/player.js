@@ -45,6 +45,7 @@
         bindShortcodePlayers();
         bindStickyPlayer();
         handleAutoplay();
+        fixBarSkinParents();
     }
 
     function bindShortcodePlayers() {
@@ -505,6 +506,22 @@
                 setTimeout(function() {
                     playStation(playerId, 0, el);
                 }, 300);
+            }
+        });
+    }
+
+    function fixBarSkinParents() {
+        var barPlayers = document.querySelectorAll('.cjrp-skin-bar');
+        barPlayers.forEach(function(player) {
+            var parent = player.parentElement;
+            while (parent && parent !== document.body) {
+                if (parent.classList.contains('radio-player-content') || parent.classList.contains('radio-player-box')) {
+                    parent.style.background = 'transparent';
+                    parent.style.padding = '0';
+                    parent.style.boxShadow = 'none';
+                    parent.style.overflow = 'visible';
+                }
+                parent = parent.parentElement;
             }
         });
     }

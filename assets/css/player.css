@@ -623,6 +623,13 @@
         display: none;
     }
 
+    .cjrp-btn-volume,
+    .cjrp-sticky-volume,
+    .cjrp-volume-slider,
+    .cjrp-sticky-vol-slider {
+        display: none !important;
+    }
+
     .cjrp-sticky-floating {
         width: calc(100% - 20px);
         right: 10px;

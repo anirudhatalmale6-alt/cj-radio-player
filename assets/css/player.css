@@ -460,9 +460,6 @@
     overflow: visible;
 }
 
-.radio-player-box:has(.cjrp-skin-bar) {
-    border-radius: 0;
-}
 
 .cjrp-skin-bar .cjrp-player-inner {
     flex-direction: row;

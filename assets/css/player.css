@@ -187,6 +187,18 @@
     transition: width 0.3s;
 }
 
+/* Embed Container */
+.cjrp-embed-container {
+    display: none;
+    padding: 10px 20px 15px;
+}
+
+.cjrp-embed-container iframe {
+    width: 100% !important;
+    border: none;
+    border-radius: 8px;
+}
+
 /* Playlist */
 .cjrp-playlist {
     border-top: 1px solid rgba(255,255,255,0.1);

@@ -198,6 +198,7 @@ class CJRP_Frontend {
     }
 
     public function render_sticky_player() {
+        if (isset($_GET['cjrp_embed'])) return;
         if (get_option('cjrp_sticky_enabled') !== '1') return;
 
         $player_id = get_option('cjrp_sticky_player_id');

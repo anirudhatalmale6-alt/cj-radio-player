@@ -287,7 +287,17 @@
             }
         }
 
-        // Standard audio
+        // Clean up any embed containers
+        var embedContainers = document.querySelectorAll('.cjrp-embed-container');
+        embedContainers.forEach(function(c) { c.innerHTML = ''; c.style.display = 'none'; });
+        var existingEmbed = document.getElementById('cjrp-embed-frame');
+        if (existingEmbed) existingEmbed.remove();
+
+        // Remove any hidden YouTube iframe
+        var ytFrame = document.getElementById('cjrp-yt-frame');
+        if (ytFrame) ytFrame.remove();
+
+        // Standard audio (stream_url, local_audio, youtube link)
         audio.src = station.sourceUrl;
         audio.load();
         audio.play().catch(function(e) {
@@ -432,11 +442,40 @@
         var existingEmbed = document.getElementById('cjrp-embed-frame');
         if (existingEmbed) existingEmbed.remove();
 
-        var container = document.createElement('div');
-        container.id = 'cjrp-embed-frame';
-        container.style.cssText = 'position:fixed;left:-9999px;width:1px;height:1px;overflow:hidden;';
-        container.innerHTML = embedCode;
-        document.body.appendChild(container);
+        var containers = document.querySelectorAll('.cjrp-embed-container');
+        containers.forEach(function(c) { c.innerHTML = ''; c.style.display = 'none'; });
+
+        var player = document.querySelector('.cjrp-player[data-player-id="' + currentPlayerId + '"]');
+        if (player) {
+            var embedContainer = player.querySelector('.cjrp-embed-container');
+            if (!embedContainer) {
+                embedContainer = document.createElement('div');
+                embedContainer.className = 'cjrp-embed-container';
+                var inner = player.querySelector('.cjrp-player-inner');
+                if (inner) inner.parentNode.insertBefore(embedContainer, inner.nextSibling);
+                else player.appendChild(embedContainer);
+            }
+            embedContainer.innerHTML = embedCode;
+            embedContainer.style.display = 'block';
+            var iframe = embedContainer.querySelector('iframe');
+            if (iframe) {
+                iframe.style.width = '100%';
+                iframe.style.maxHeight = '300px';
+                iframe.style.borderRadius = '8px';
+            }
+        } else {
+            var container = document.createElement('div');
+            container.id = 'cjrp-embed-frame';
+            container.style.cssText = 'position:fixed;bottom:60px;right:10px;width:320px;height:200px;z-index:99998;border-radius:8px;overflow:hidden;box-shadow:0 4px 20px rgba(0,0,0,0.4);';
+            container.innerHTML = embedCode;
+            var iframe = container.querySelector('iframe');
+            if (iframe) {
+                iframe.style.width = '100%';
+                iframe.style.height = '100%';
+                iframe.style.border = 'none';
+            }
+            document.body.appendChild(container);
+        }
     }
 
     function playYouTube(videoId) {

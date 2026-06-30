@@ -584,6 +584,25 @@
     letter-spacing: 0.5px;
 }
 
+/* ===== Body adjustment when sticky is visible ===== */
+body.cjrp-has-sticky-bottom {
+    padding-bottom: 60px;
+}
+
+body.cjrp-has-sticky-top {
+    padding-top: 60px;
+}
+
+body.cjrp-has-sticky-bottom .scroll-top-btn,
+body.cjrp-has-sticky-bottom .dark-mode-toggle,
+body.cjrp-has-sticky-bottom #scrollTopBtn,
+body.cjrp-has-sticky-bottom #darkModeToggle,
+body.cjrp-has-sticky-bottom [class*="scroll-top"],
+body.cjrp-has-sticky-bottom [class*="back-to-top"],
+body.cjrp-has-sticky-bottom .cjrp-minimized-btn {
+    bottom: 75px !important;
+}
+
 /* No sticky on mobile when disabled */
 .cjrp-sticky-no-mobile {
     display: none;

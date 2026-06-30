@@ -172,12 +172,17 @@
             });
         }
 
+        // Add body class for sticky position
+        var stickyPos = sticky.classList.contains('cjrp-sticky-top') ? 'top' : 'bottom';
+        document.body.classList.add('cjrp-has-sticky-' + stickyPos);
+
         // Close (minimize)
         var closeBtn = sticky.querySelector('.cjrp-sticky-close');
         var minimizedBtn = document.querySelector('.cjrp-minimized-btn');
         if (closeBtn) {
             closeBtn.addEventListener('click', function() {
                 sticky.classList.add('cjrp-sticky-hidden');
+                document.body.classList.remove('cjrp-has-sticky-' + stickyPos);
                 if (minimizedBtn) {
                     minimizedBtn.style.display = 'flex';
                 }
@@ -188,6 +193,7 @@
         if (minimizedBtn) {
             minimizedBtn.addEventListener('click', function() {
                 sticky.classList.remove('cjrp-sticky-hidden');
+                document.body.classList.add('cjrp-has-sticky-' + stickyPos);
                 minimizedBtn.style.display = 'none';
                 if (!isPlaying && currentPlayerId == playerId) {
                     audio.play().catch(function(){});
